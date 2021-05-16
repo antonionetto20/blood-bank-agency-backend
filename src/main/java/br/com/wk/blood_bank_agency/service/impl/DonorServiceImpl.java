@@ -33,11 +33,16 @@ public class DonorServiceImpl implements DonorService{
 
 	@Override
 	public List<Map<String,Integer>> getAmountDonorsPerState() {
+		if(donorRepository.donorsByState().isEmpty())
+			return null;
 		return donorRepository.donorsByState();
 	}
 
 	@Override
 	public LinkedList<AverageBmiByAgeRange> getAverageBmiByAgRange() {
+		
+		if(donorRepository.averageBmiByAgRange().isEmpty())
+			return null;
 		
 		LinkedList averageBmiByAgeRanges = new LinkedList();
 		Double[] totalBMIByRange = new Double[] {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
@@ -104,11 +109,15 @@ public class DonorServiceImpl implements DonorService{
 			}
 			
 		}
+		
 		return averageBmiByAgeRanges;
 	}
 
 	@Override
 	public List<PercentageObesityByGender> getPercentageOfObeseIndividualsByGender() {
+		
+		if(donorRepository.percentageOfObeseIndividualsBySex().isEmpty())
+			return null;
 		
 		PercentageObesityByGender percentageObesityByGender = new PercentageObesityByGender();
 		List<PercentageObesityByGender> percentageObesityByGenderList = new ArrayList<PercentageObesityByGender>();
@@ -152,6 +161,9 @@ public class DonorServiceImpl implements DonorService{
 	@Override
 	public LinkedList<AverageAgeByBloodType> getAverageAgeByBloodType() {
 		
+		if(donorRepository.averageAgeByBloodType().isEmpty())
+			return null;
+		
 		LinkedList<AverageAgeByBloodType> result = new LinkedList<AverageAgeByBloodType>();
 
 		Integer[] amountDonors = new Integer[] {0,0,0,0,0,0,0,0};
@@ -187,6 +199,9 @@ public class DonorServiceImpl implements DonorService{
 
 	@Override
 	public LinkedList<AmountDonorsByBloodType> getAmountDonorsByBloodType() {
+		
+		if(donorRepository.amountDonorsByBloodType().isEmpty())
+			return null;
 
 		LinkedList<AmountDonorsByBloodType> result = new LinkedList<AmountDonorsByBloodType>();
 
@@ -213,7 +228,7 @@ public class DonorServiceImpl implements DonorService{
 		bloodTypesDonate.put("O-", "A+,B+,O+,AB+,A-,B-,O-,AB-");
 		
 		// Somente pessoas com idade de 16 a 69 anos e com peso acima de 50 Kg podem doar sangue.
-		for (String line : donorRepository.averageAgeByBloodType()) {
+		for (String line : donorRepository.amountDonorsByBloodType()) {
 			
 			String[] lineList = line.split(",");
 			
@@ -237,7 +252,7 @@ public class DonorServiceImpl implements DonorService{
 			amountDonorsByloodType.setAmountDonors(amountDonors[bloodTypes.indexOf(bloodType)]);
 			result.add(amountDonorsByloodType);
 		}
-
+		
 		return result;
 	}
 
