@@ -9,19 +9,17 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import br.com.wk.blood_bank_agency.dto.AmountDonorsByBloodType;
+import br.com.wk.blood_bank_agency.dto.AverageAgeByBloodType;
+import br.com.wk.blood_bank_agency.dto.AverageBmiByAgeRange;
+import br.com.wk.blood_bank_agency.dto.PercentageObesityByGender;
 import br.com.wk.blood_bank_agency.model.Donor;
-import br.com.wk.blood_bank_agency.model.PercentageObesityByGender;
-import br.com.wk.blood_bank_agency.model.AmountDonorsByBloodType;
-import br.com.wk.blood_bank_agency.model.AverageAgeByBloodType;
-import br.com.wk.blood_bank_agency.model.AverageBmiByAgeRange;
 import br.com.wk.blood_bank_agency.repository.DonorRepository;
 import br.com.wk.blood_bank_agency.service.DonorService;
 
@@ -39,12 +37,12 @@ public class DonorServiceImpl implements DonorService{
 	}
 
 	@Override
-	public LinkedList<AverageBmiByAgeRange> getAverageBmiByAgRange() {
+	public List<AverageBmiByAgeRange> getAverageBmiByAgRange() {
 		
 		if(donorRepository.averageBmiByAgRange().isEmpty())
 			return null;
 		
-		LinkedList averageBmiByAgeRanges = new LinkedList();
+		List<AverageBmiByAgeRange> averageBmiByAgeRanges = new LinkedList<>();
 		Double[] totalBMIByRange = new Double[] {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 		Integer[] totalDonorAmountPerTrack = new Integer[] {0,0,0,0,0,0,0,0,0,0,0,0};
 		
@@ -159,16 +157,16 @@ public class DonorServiceImpl implements DonorService{
 	}
 
 	@Override
-	public LinkedList<AverageAgeByBloodType> getAverageAgeByBloodType() {
+	public List<AverageAgeByBloodType> getAverageAgeByBloodType() {
 		
 		if(donorRepository.averageAgeByBloodType().isEmpty())
 			return null;
 		
-		LinkedList<AverageAgeByBloodType> result = new LinkedList<AverageAgeByBloodType>();
+		List<AverageAgeByBloodType> result = new LinkedList<AverageAgeByBloodType>();
 
 		Integer[] amountDonors = new Integer[] {0,0,0,0,0,0,0,0};
 		Integer[] ages = new Integer[] {0,0,0,0,0,0,0,0};
-		LinkedList<String> bloodTypes = new LinkedList<String>();
+		List<String> bloodTypes = new LinkedList<String>();
 		bloodTypes.add("A+");
 		bloodTypes.add("A-");
 		bloodTypes.add("B+");
@@ -198,16 +196,16 @@ public class DonorServiceImpl implements DonorService{
 	}
 
 	@Override
-	public LinkedList<AmountDonorsByBloodType> getAmountDonorsByBloodType() {
+	public List<AmountDonorsByBloodType> getAmountDonorsByBloodType() {
 		
 		if(donorRepository.amountDonorsByBloodType().isEmpty())
 			return null;
 
-		LinkedList<AmountDonorsByBloodType> result = new LinkedList<AmountDonorsByBloodType>();
+		List<AmountDonorsByBloodType> result = new LinkedList<AmountDonorsByBloodType>();
 
 		Integer[] amountDonors = new Integer[] {0,0,0,0,0,0,0,0};
 		
-		LinkedList<String> bloodTypes = new LinkedList<String>();
+		List<String> bloodTypes = new LinkedList<String>();
 		bloodTypes.add("A+");
 		bloodTypes.add("A-");
 		bloodTypes.add("B+");
@@ -302,13 +300,13 @@ public class DonorServiceImpl implements DonorService{
 		return donors;
 	}
 	
-	public boolean between(Integer x, Integer y, Integer z) {
+	private boolean between(Integer x, Integer y, Integer z) {
 		if(x >= y && x <= z)
 			return true;
 		return false;
 	}
 	
-	public double getImc(double altura, double peso) {
+	private double getImc(double altura, double peso) {
 		return peso/(altura*altura);
 	}
 	

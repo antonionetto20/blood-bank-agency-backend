@@ -1,4 +1,4 @@
-package br.com.wk.blood_bank_agency.model;
+package br.com.wk.blood_bank_agency.dto;
 
 import lombok.Data;
 
